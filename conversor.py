@@ -17,6 +17,7 @@ dicionario_de_simbolos = dict(zip(chaves, valores))
 with open("/content/drive/MyDrive/Conversor de Moedas/dicionario-de-simbolos.json", "w", encoding='utf-8') as f:
     json.dump(dicionario_de_simbolos, f, ensure_ascii=False, indent = 4)
 
+
 # Mecânica para converter símbolos
 
 #PASSOS
@@ -32,18 +33,18 @@ with open("/content/drive/MyDrive/Conversor de Moedas/dicionario-de-simbolos.jso
   simbolo_moeda = dicionario_de_simbolo.get(nome_moeda).lower()
 
 # Mecãnica para gerar a URL para requisição
+
 # URL base
+
 date = "latest"
 apiVersion = "v1"
 endpoint = "currencies"
+
 url = f"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{date}/{apiVersion}/{endpoint}/{simbolo_moeda}.json"
 
-#Mecânica de requisição
 resposta = requests.get(url)
 conteudo = resposta.content
-conversao = json.loads(conteudo.decode('utf-8')).get(simbolo_moeda).get("brl")
-print(conversao)
+conversao = json.loads(conteudo.decode("utf-8")).get(simbolo_moeda).get("brl")
 
-#Aparencia
-formatacao = f"O valor convertido para reais é R${"round.conversao} "
+formatacao = f"\nO valor do {nome_moeda} convertido para reais é R${round(conversao,2)}."
 print(formatacao)
