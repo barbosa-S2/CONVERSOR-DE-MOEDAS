@@ -18,6 +18,7 @@ with open("/content/drive/MyDrive/Conversor de Moedas/dicionario-de-simbolos.jso
     json.dump(dicionario_de_simbolos, f, ensure_ascii=False, indent = 4)
 
 
+# @title Conversor de Moedas
 # Mecânica para converter símbolos
 
 #PASSOS
@@ -25,7 +26,7 @@ with open("/content/drive/MyDrive/Conversor de Moedas/dicionario-de-simbolos.jso
 # Abrir o arquivo e pegar o símbolo da moeda informada - FEITO
 # Devolver o símbolo da moeda - FEITO
 
-nome_moeda = input("Informe o nome da moeda: ").title()
+nome_moeda = "Dolar Americano"  # @param ["Dolar Australiano", "Boliviano", "Dolar Canadense", "Libra Esterlina", "Euro", "Dolar Nova Zelandês", "Guarani", "Dolar Americano"]
 
 with open("/content/drive/MyDrive/Conversor de Moedas/dicionario-de-simbolos.json", "r") as arquivo:
   dicionario_de_simbolo = json.load(arquivo)
@@ -33,16 +34,21 @@ with open("/content/drive/MyDrive/Conversor de Moedas/dicionario-de-simbolos.jso
   simbolo_moeda = dicionario_de_simbolo.get(nome_moeda).lower()
 
 # Mecãnica para gerar a URL para requisição
-
 # URL base
-
 date = "latest"
 apiVersion = "v1"
 endpoint = "currencies"
-
 url = f"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{date}/{apiVersion}/{endpoint}/{simbolo_moeda}.json"
 
+#Mecânica de requisição
 resposta = requests.get(url)
+conteudo = resposta.content
+conversao = json.loads(conteudo.decode('utf-8')).get(simbolo_moeda).get("brl")
+
+
+#Aparencia
+formatacao = f"\nO valor do {nome_moeda} convertido para reais é R${round(conversao,2)}."
+print(formatacao)
 conteudo = resposta.content
 conversao = json.loads(conteudo.decode("utf-8")).get(simbolo_moeda).get("brl")
 
