@@ -1,6 +1,7 @@
 import csv
 import json
 import pprint
+import requests
 
 chaves = []
 valores = []
@@ -28,6 +29,21 @@ nome_moeda = input("Informe o nome da moeda: ").title()
 with open("/content/drive/MyDrive/Conversor de Moedas/dicionario-de-simbolos.json", "r") as arquivo:
   dicionario_de_simbolo = json.load(arquivo)
 
-  simbolo_moeda = dicionario_de_simbolo.get(nome_moeda)
+  simbolo_moeda = dicionario_de_simbolo.get(nome_moeda).lower()
 
-print(simbolo_moeda)
+# Mecãnica para gerar a URL para requisição
+# URL base
+date = "latest"
+apiVersion = "v1"
+endpoint = "currencies"
+url = f"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{date}/{apiVersion}/{endpoint}/{simbolo_moeda}.json"
+
+#Mecânica de requisição
+resposta = requests.get(url)
+conteudo = resposta.content
+conversao = json.loads(conteudo.decode('utf-8')).get(simbolo_moeda).get("brl")
+print(conversao)
+
+#Aparencia
+formatacao = f"O valor convertido para reais é R${"round.conversao} "
+print(formatacao)
