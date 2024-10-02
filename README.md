@@ -15,6 +15,10 @@ Este projeto Python é um conversor de moedas simples que utiliza a API Currency
   * `json`
   * `pprint`
   * `requests`
+  * 
+## Desenvolvedor
+Este projeto foi desenvolvido por:
+* **Guilherme Barbosa Amorim:** Desenvolvimento inicial no Google Colab
 
 ## Instalação
 1. **Clone o repositório:**
